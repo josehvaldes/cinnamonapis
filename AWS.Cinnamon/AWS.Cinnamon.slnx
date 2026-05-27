@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Functions/">
+    <Project Path="AWS.Cinnamon.Api/AWS.Cinnamon.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="Cinnamon.Application/Cinnamon.Application.csproj" />
+    <Project Path="Cinnamon.Contracts/Cinnamon.Contracts.csproj" />
+    <Project Path="Cinnamon.Domain/Cinnamon.Domain.csproj" />
+  </Folder>
+</Solution>
