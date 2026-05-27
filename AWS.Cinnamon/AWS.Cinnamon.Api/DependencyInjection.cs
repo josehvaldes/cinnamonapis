@@ -1,4 +1,5 @@
-﻿using AWS.Cinnamon.Api.Settings;
+﻿using Asp.Versioning;
+using AWS.Cinnamon.Api.Settings;
 using Cinnamon.Application.Handlers;
 using Cinnamon.Application.Interfaces;
 using Microsoft.AspNetCore.RateLimiting;
@@ -11,6 +12,7 @@ namespace AWS.Cinnamon.Api
         public static IServiceCollection AddAPIDependencies(
             this IServiceCollection services, IConfiguration config)
         {
+            services.AddVersioningConfig(config);
             services.AddCorsConfig(config);
             services.AddRateLimitingConfig(config);
             services.AddScoped<IHandler, ProductHandler>();
@@ -66,6 +68,26 @@ namespace AWS.Cinnamon.Api
                         .WithMethods("GET", "POST", "PUT", "DELETE");
                 });
 
+            });
+            return services;
+        }
+
+        public static IServiceCollection AddVersioningConfig(
+            this IServiceCollection services, IConfiguration config)
+        {
+
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ReportApiVersions = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(
+                    new UrlSegmentApiVersionReader(),   // /api/v1/products
+                    new HeaderApiVersionReader("X-Api-Version")); // optional fallback
+            }).AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
             });
             return services;
         }

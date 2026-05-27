@@ -1,13 +1,15 @@
-﻿using Cinnamon.Application.Interfaces;
+﻿using Asp.Versioning;
+using Cinnamon.Application.Interfaces;
 using Cinnamon.Contracts.Responses.Homepage;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AWS.Cinnamon.Api.Controllers
-{
-    [Route("api/[controller]")]
+{    
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class HomepageController(ILogger<HomepageController> _logger,
         IHandler _handler) : ControllerBase
     {
