@@ -2,7 +2,9 @@
 using AWS.Cinnamon.Api.Settings;
 using Cinnamon.Application.Handlers;
 using Cinnamon.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace AWS.Cinnamon.Api
 {
@@ -16,9 +18,18 @@ namespace AWS.Cinnamon.Api
             services.AddCorsConfig(config);
             services.AddRateLimitingConfig(config);
             services.AddScoped<IHandler, ProductHandler>();
+            services.AddCustomHealthChecks(config);
+            services.AddCacheProfiles(config);
             return services;
         }
 
+        public static IServiceCollection AddCustomHealthChecks(
+            this IServiceCollection services, IConfiguration config)
+        {
+
+            services.AddHealthChecks().AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "live" });
+            return services;
+        }
         public static IServiceCollection AddRateLimitingConfig(
             this IServiceCollection services, IConfiguration config)
         {
@@ -89,6 +100,21 @@ namespace AWS.Cinnamon.Api
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
+            return services;
+        }
+
+        public static IServiceCollection AddCacheProfiles(
+            this IServiceCollection services, IConfiguration config)
+        {
+            services.AddControllersWithViews(options => { 
+                options.CacheProfiles.Add("Public5min", new CacheProfile
+                {
+                    Duration = 300,
+                    Location = ResponseCacheLocation.Any,
+                    NoStore = false
+                });
+            });
+
             return services;
         }
 

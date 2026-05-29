@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddResponseCaching();
+
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
@@ -20,7 +22,7 @@ var app = builder.Build();
 app.UseExceptionHandler();
 app.UseCors("AllowCloudflare");
 app.UseRateLimiter();
-
+app.MapCustomBehaviors(); // Extension method for any custom middleware or behaviors
 app.UseMiddleware<HeadersMiddleware>();
 
 app.UseHttpsRedirection();

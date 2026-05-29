@@ -13,6 +13,8 @@ namespace AWS.Cinnamon.Api.Controllers
     public class HomepageController(ILogger<HomepageController> _logger,
         IHandler _handler) : ControllerBase
     {
+        [HttpGet]
+        [ResponseCache(CacheProfileName ="Public5min")]
         public async Task<IActionResult> Get()
         {
             _logger.LogInformation("Received request for homepage data.");

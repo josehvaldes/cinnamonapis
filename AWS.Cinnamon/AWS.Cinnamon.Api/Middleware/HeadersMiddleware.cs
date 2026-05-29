@@ -10,6 +10,12 @@
 
         public async Task InvokeAsync(HttpContext context)
         {
+            // Safe default: do not cache unless an endpoint explicitly overrides this
+            if (!context.Response.Headers.ContainsKey("Cache-Control"))
+            {
+                context.Response.Headers["Cache-Control"] = "no-store";
+            }
+
             context.Response.Headers["X-Content-Type-Options"] = "nosniff";
             context.Response.Headers["X-Frame-Options"] = "DENY";
             context.Response.Headers["Referrer-Policy"] = "no-referrer";
