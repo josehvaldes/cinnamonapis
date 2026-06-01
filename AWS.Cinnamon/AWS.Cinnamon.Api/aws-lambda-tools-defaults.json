@@ -10,5 +10,8 @@
   "configuration": "Release",
   "s3-prefix": "AWS.Cinnamon.Api/",
   "template": "serverless.template",
-  "template-parameters": ""
+  "template-parameters": "",
+  "s3-bucket": "cinnamonapi-cloudformation",
+  "stack-name": "cinnamonapiv1",
+  "environment-variables": "Cors__AllowedOrigins__0=Updatethedomain.com"
 }
