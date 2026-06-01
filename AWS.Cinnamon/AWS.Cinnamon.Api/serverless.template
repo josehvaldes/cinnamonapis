@@ -11,8 +11,8 @@
         "Handler": "AWS.Cinnamon.Api",
         "Runtime": "dotnet10",
         "CodeUri": "",
-        "MemorySize": 512,
-        "Timeout": 30,
+        "MemorySize": 256,
+        "Timeout": 15,
         "Role": null,
         "Policies": [
           "AWSLambdaBasicExecutionRole"
