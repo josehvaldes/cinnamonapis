@@ -20,5 +20,6 @@
     <ProjectReference Include="..\Cinnamon.Application\Cinnamon.Application.csproj" />
     <ProjectReference Include="..\Cinnamon.Contracts\Cinnamon.Contracts.csproj" />
     <ProjectReference Include="..\Cinnamon.Domain\Cinnamon.Domain.csproj" />
+    <ProjectReference Include="..\Cinnamon.Infrastructure.AWS\Cinnamon.Infrastructure.AWS.csproj" />
   </ItemGroup>
 </Project>

@@ -10,5 +10,6 @@
     <Project Path="Cinnamon.Application/Cinnamon.Application.csproj" />
     <Project Path="Cinnamon.Contracts/Cinnamon.Contracts.csproj" />
     <Project Path="Cinnamon.Domain/Cinnamon.Domain.csproj" />
+    <Project Path="Cinnamon.Infrastructure.AWS/Cinnamon.Infrastructure.AWS.csproj" Id="ef7432a8-e804-4d9c-8a96-8d47797102a5" />
   </Folder>
 </Solution>
