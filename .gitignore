@@ -57,3 +57,4 @@ TestResult.xml
 nunit-*.xml
 AWS.Cinnamon/.vs/
 AWS.Cinnamon/AWS.Cinnamon.Api/appsettings.Development.json
+AWS.Cinnamon/Cinnamon.Seeder.AWS/appsettings.Development.json

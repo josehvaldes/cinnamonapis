@@ -15,7 +15,7 @@ namespace Cinnamon.Infrastructure.AWS
         {
             AwsMapping.RegisterMappings();
 
-            services.Configure<AwsSettings>(config.GetSection("AwsSettings"));
+            services.Configure<AwsSettings>(config.GetSection("AWS"));
             services.AddAWSService<IAmazonDynamoDB>();
             services.AddSingleton<IDynamoDBContext>(sp =>
             {

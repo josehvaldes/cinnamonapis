@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Cinnamon.Seeder.AWS": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

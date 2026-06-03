@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/seeder/">
+    <Project Path="Cinnamon.Seeder.AWS/Cinnamon.Seeder.AWS.csproj" Id="f5948f80-61f9-497e-9183-ec6e720daa51" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path="../README.md" />
   </Folder>
@@ -12,4 +15,5 @@
     <Project Path="Cinnamon.Domain/Cinnamon.Domain.csproj" />
     <Project Path="Cinnamon.Infrastructure.AWS/Cinnamon.Infrastructure.AWS.csproj" Id="ef7432a8-e804-4d9c-8a96-8d47797102a5" />
   </Folder>
+  <Folder Name="/tests/" />
 </Solution>
