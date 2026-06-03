@@ -26,7 +26,7 @@ namespace Cinnamon.Infrastructure.AWS.Queries
                 OverrideTableName = _tableName 
             };
 
-            var items = await _context.QueryAsync<ProductItem>("trending", queryConfig).GetRemainingAsync();
+            var items = await _context.QueryAsync<ProductItem>("trendings", queryConfig).GetRemainingAsync();
             return items.Adapt<List<Product>>();
         }
     }

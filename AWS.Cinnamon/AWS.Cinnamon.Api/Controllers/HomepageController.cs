@@ -26,7 +26,7 @@ namespace AWS.Cinnamon.Api.Controllers
 
             var homepagedata = new HomepageResponse
             {
-                TrendingProducts = trendingProducts.Adapt<IReadOnlyList<ProductResponse>>(),
+                Trendings = trendingProducts.Adapt<IReadOnlyList<ProductResponse>>(),
                 NewArrivals = newArrivals.Adapt<IReadOnlyList<ProductResponse>>(),
                 OnSales = onsales.Adapt<IReadOnlyList<ProductResponse>>()
             };
