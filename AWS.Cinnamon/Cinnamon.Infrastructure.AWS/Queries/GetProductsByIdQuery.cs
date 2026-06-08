@@ -13,29 +13,26 @@ namespace Cinnamon.Infrastructure.AWS.Queries
     {
         private readonly IDynamoDBContext _context;
         private readonly string _tableName;
-        private readonly string _indexName;
         private readonly IAsyncPolicy _policy;
 
         public GetProductsByIdQuery(IDynamoDBContext context, IOptions<AwsSettings> settings, IAsyncPolicy policy)
         {
             _context = context;
-            _tableName = settings.Value.DynamoDbTableName;
-            _indexName = settings.Value.ProductsByIdIndexName;
+            _tableName = settings.Value.ProductsTableName;
             _policy = policy;
         }
 
-        public async Task<List<Product>> ExecuteAsync(string id)
+        public async Task<Product> ExecuteAsync(string id)
         {
-            var queryConfig = new QueryConfig
+            var loadConfig = new LoadConfig
             {
                 OverrideTableName = _tableName,
-                IndexName = _indexName
             };
 
             return await _policy.ExecuteAsync(async () =>
             {
-                var items = await _context.QueryAsync<ProductItem>(id, queryConfig).GetRemainingAsync();
-                return items.Adapt<List<Product>>();
+                var item = await _context.LoadAsync<ProductItem>(id, "METADATA", loadConfig);
+                return item.Adapt<Product>();
             });
         }
     }

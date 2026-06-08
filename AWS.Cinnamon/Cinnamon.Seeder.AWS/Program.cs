@@ -12,10 +12,14 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 var dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
-var tablename = configuration.GetValue<string>("AWS:DynamoDbTableName") ?? "ProductsTable";
+var productTableName = configuration.GetValue<string>("AWS:ProductsTableName") ?? "ProductsTable";
+var mappingTableName = configuration.GetValue<string>("AWS:MappingsTableName") ?? "MappingsTable";
+
 var seeders = new Dictionary<string, Func<Task>>(StringComparer.OrdinalIgnoreCase) {
-    [nameof(ProductSeeder)] = () => new ProductSeeder().ExecuteAsync(Path.Combine(dataDir, "products.json"), tablename),
+    //[nameof(ProductSeeder)] = () => new ProductSeeder().ExecuteAsync(Path.Combine(dataDir, "products.json"), productTableName),
+    [nameof(MappingSeeder)] = () => new MappingSeeder().ExecuteAsync(Path.Combine(dataDir, "mappings.json"), mappingTableName)
 };
+
 
 Console.WriteLine("No command provided. Seeding all by default...");
 await Task.WhenAll(seeders.Values.Select(seed => seed()));

@@ -9,7 +9,8 @@ namespace Cinnamon.Infrastructure.AWS.Settings
         public string AccessKey { get; set; } = string.Empty;
         public string SecretKey { get; set; } = string.Empty;
         public string Region { get; set; } = string.Empty;
-        public string DynamoDbTableName { get; set; } = string.Empty;
+        public string ProductsTableName { get; set; } = string.Empty;
+        public string MappingsTableName { get; set; } = string.Empty;
         public string ProductsByIdIndexName { get; set; } = string.Empty;
     }
 }

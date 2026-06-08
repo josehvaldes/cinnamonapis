@@ -10,5 +10,6 @@ namespace Cinnamon.Application.Interfaces
         public Task<List<Product>> GetNewArrivals();
         public Task<List<Product>> GetTrending();
         public Task<List<Product>> GetOnSales();
+        public Task<Product> GetProductById(string id);
     }
 }

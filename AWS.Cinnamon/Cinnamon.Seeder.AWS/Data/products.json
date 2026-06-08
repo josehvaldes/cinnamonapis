@@ -4,15 +4,6 @@
     "Name": "Blueberry Muffin",
     "Img": "/products/blueberry-muffin-1929337_1280.jpg",
     "Price": 2.49,
-    "Category": "new-arrivals",
-    "InStock": true
-  },
-  {
-    "id": "11111111-0000-0000-0000-000000000001",
-    "Name": "Blueberry Muffin",
-    "Img": "/products/blueberry-muffin-1929337_1280.jpg",
-    "Price": 2.49,
-    "Category": "gluten-free",
     "InStock": true
   },
   {
@@ -20,23 +11,6 @@
     "Name": "Strawberry Tart",
     "Img": "/products/strawberry-tart-1929338_1280.jpg",
     "Price": 3.99,
-    "Category": "new-arrivals",
-    "InStock": true
-  },
-  {
-    "id": "11111111-0000-0000-0000-000000000002",
-    "Name": "Strawberry Tart",
-    "Img": "/products/strawberry-tart-1929338_1280.jpg",
-    "Price": 3.99,
-    "Category": "sugar-free",
-    "InStock": false
-  },
-  {
-    "id": "11111111-0000-0000-0000-000000000003",
-    "Name": "Cinnamon Roll",
-    "Img": "/products/cinnamon-roll-1995428_1280.jpg",
-    "Price": 2.99,
-    "Category": "trendings",
     "InStock": true
   },
   {
@@ -44,7 +18,13 @@
     "Name": "Cinnamon Roll",
     "Img": "/products/cinnamon-roll-1995428_1280.jpg",
     "Price": 2.99,
-    "Category": "house-specialty",
+    "InStock": true
+  },
+  {
+    "id": "11111111-0000-0000-0000-000000000003",
+    "Name": "Cinnamon Roll",
+    "Img": "/products/cinnamon-roll-1995428_1280.jpg",
+    "Price": 2.99,
     "InStock": true
   },
   {
@@ -52,7 +32,6 @@
     "Name": "Chocolate Croissant",
     "Img": "/products/chocolate-croissant-1929336_1280.jpg",
     "Price": 3.49,
-    "Category": "trendings",
     "InStock": true
   },
   {
@@ -60,7 +39,6 @@
     "Name": "Lemon Tart",
     "Img": "/products/lemon-tart-1929339_1280.jpg",
     "Price": 3.79,
-    "Category": "trendings",
     "InStock": true
   },
   {
@@ -68,7 +46,6 @@
     "Name": "Apple Pie",
     "Img": "/products/apple-pie-1929335_1280.jpg",
     "Price": 4.99,
-    "Category": "on-sales",
     "InStock": true
   },
   {
@@ -76,7 +53,6 @@
     "Name": "Vanilla Cupcake",
     "Img": "/products/vanilla-cupcake-1929334_1280.jpg",
     "Price": 1.99,
-    "Category": "on-sales",
     "InStock": true
   },
   {
@@ -84,7 +60,6 @@
     "Name": "Chocolate Brownie",
     "Img": "/products/chocolate-brownie-1929333_1280.jpg",
     "Price": 2.49,
-    "Category": "on-sales",
     "InStock": true
   }
 ]

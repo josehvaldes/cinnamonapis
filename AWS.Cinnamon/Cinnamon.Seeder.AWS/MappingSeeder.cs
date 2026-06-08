@@ -8,23 +8,25 @@ using System.Text;
 
 namespace Cinnamon.Seeder.AWS
 {
-    public class ProductSeeder
+    public class MappingSeeder
     {
         public async Task ExecuteAsync(string filePath, string tableName) 
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                Console.WriteLine("File path is not provided. Skipping product seeding.");
+                Console.WriteLine("File path is not provided. Skipping mapping seeding.");
                 return;
             }
+            // Implement the logic to read the mapping data from the file and seed it into the database
+            Console.WriteLine("Mapping seeding completed.");
             using (var reader = new StreamReader(filePath))
             {
                 var json = await reader.ReadToEndAsync();
-                var seeds = JsonConvert.DeserializeObject<List<ProductItem>>(json) ?? new List<ProductItem>();
+                var seeds = JsonConvert.DeserializeObject<List<MappingItem>>(json) ?? new List<MappingItem>();
 
                 if (seeds.Count == 0)
                 {
-                    Console.WriteLine("No products found in the seed file. Skipping product seeding.");
+                    Console.WriteLine("No mappings found in the seed file. Skipping mapping seeding.");
                     return;
                 }
                 else 
@@ -41,15 +43,16 @@ namespace Cinnamon.Seeder.AWS
                                     .Build();
 
                     var queryConfig = new SaveConfig { OverrideTableName = tableName };
-                    Console.WriteLine($"Seeding {seeds.Count} products...");
-                    foreach (var product in seeds)
+                    Console.WriteLine($"Seeding {seeds.Count} mappings...");
+                    foreach (var mapping in seeds)
                     {
-                        await context.SaveAsync(product, queryConfig);
+                        await context.SaveAsync(mapping, queryConfig);
                     }
-                    Console.WriteLine("Product seeding completed.");
+                    Console.WriteLine("Mapping seeding completed.");
 
                 }
             }
+
         }
     }
 }

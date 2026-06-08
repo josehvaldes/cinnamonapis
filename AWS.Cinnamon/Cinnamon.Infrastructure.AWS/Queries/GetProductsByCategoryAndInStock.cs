@@ -13,29 +13,51 @@ namespace Cinnamon.Infrastructure.AWS.Queries
     public class GetProductsByCategoryAndInStock : IGetProductsByCategoryAndInStock
     {
         private readonly IDynamoDBContext _context;
-        private readonly string _tableName;
+        private readonly string _productsTableName;
+        private readonly string _mappingsTableName;
         private readonly IAsyncPolicy _policy;
 
         public GetProductsByCategoryAndInStock(IDynamoDBContext context, IOptions<AwsSettings> settings, IAsyncPolicy policy)
         {
             _context = context;
-            _tableName = settings.Value.DynamoDbTableName;
+            _productsTableName = settings.Value.ProductsTableName;
+            _mappingsTableName = settings.Value.MappingsTableName;
             _policy = policy;
         }
 
         public async Task<List<Product>> ExecuteAsync(string category, bool inStock)
         {
-            var queryConfig = new QueryConfig
+
+            var mappingQueryConfig = new QueryConfig { OverrideTableName = _mappingsTableName };
+            var mappings = await _policy.ExecuteAsync(async () =>
             {
-                OverrideTableName = _tableName,
-                QueryFilter = [new ScanCondition(nameof(ProductItem.InStock), ScanOperator.Equal, inStock)]
+                var items = await _context.QueryAsync<MappingItem>($"CATEGORY#{category}", mappingQueryConfig).GetRemainingAsync();
+                return items;
+            });
+
+
+            if (mappings == null || !mappings.Any())
+            {
+                return new List<Product>();
+            }
+
+            var queryConfig = new BatchGetConfig
+            {
+                OverrideTableName = _productsTableName,
             };
+
+            var getbatch = _context.CreateBatchGet<ProductItem>(queryConfig);
+            foreach (var mapping in mappings)
+            {
+                getbatch.AddKey(mapping.Value, "METADATA");
+            }
 
             return await _policy.ExecuteAsync(async () =>
             {
-                var items = await _context.QueryAsync<ProductItem>(category, queryConfig)
-                                          .GetRemainingAsync();
-                return items.Adapt<List<Product>>();
+   
+                await getbatch.ExecuteAsync();
+                var list =  getbatch.Results.Adapt<List<Product>>();
+                return list.Where(p => p.InStock == inStock).ToList();
             });
         }
     }

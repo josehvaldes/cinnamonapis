@@ -37,7 +37,6 @@ namespace Cinnamon.Infrastructure.AWS
             services.AddScoped<IGetTrendingQuery, GetTrendingQuery>();
             services.AddScoped<IGetOnSalesQuery, GetOnSalesQuery>();
             services.AddScoped<IGetProductsByIdQuery, GetProductsByIdQuery>();
-            services.AddScoped<IGetProductByCategoryAndIdQuery, GetProductByCategoryAndIdQuery>();
             services.AddScoped<IGetProductsByCategoryAndInStock, GetProductsByCategoryAndInStock>();
 
             return services;

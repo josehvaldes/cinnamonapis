@@ -8,11 +8,13 @@ namespace Cinnamon.Infrastructure.AWS.Model
     [DynamoDBTable("ProductsNameFromSettings")]
     public class ProductItem
     {
+        
         [DynamoDBHashKey]
-        public string Category { get; set; } = string.Empty;
+        public string Id { get; set; } = string.Empty;
 
         [DynamoDBRangeKey]
-        public string Id { get; set; } = string.Empty;
+        public string SortKey { get; set; } = "METADATA";
+
 
         public string Name { get; set; } = string.Empty;
 
