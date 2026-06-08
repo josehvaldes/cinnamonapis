@@ -13,5 +13,5 @@
   "template-parameters": "",
   "s3-bucket": "cinnamonapi-cloudformation",
   "stack-name": "cinnamonapiv1",
-  "environment-variables": "Cors__AllowedOrigins__0=Updatethedomain.com"
+  "environment-variables": "Cors__AllowedOrigins__0=https://dev.cinnamonagents.com"
 }

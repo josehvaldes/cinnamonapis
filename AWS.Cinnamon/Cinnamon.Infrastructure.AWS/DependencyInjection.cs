@@ -5,6 +5,7 @@ using Cinnamon.Infrastructure.AWS.Queries;
 using Cinnamon.Infrastructure.AWS.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
 
 namespace Cinnamon.Infrastructure.AWS
 {
@@ -17,6 +18,7 @@ namespace Cinnamon.Infrastructure.AWS
 
             services.Configure<AwsSettings>(config.GetSection("AWS"));
             services.AddAWSService<IAmazonDynamoDB>();
+            services.AddPollyDependencies(config);
             services.AddSingleton<IDynamoDBContext>(sp =>
             {
                 var client = sp.GetRequiredService<IAmazonDynamoDB>();
@@ -38,6 +40,18 @@ namespace Cinnamon.Infrastructure.AWS
             services.AddScoped<IGetProductByCategoryAndIdQuery, GetProductByCategoryAndIdQuery>();
             services.AddScoped<IGetProductsByCategoryAndInStock, GetProductsByCategoryAndInStock>();
 
+            return services;
+        }
+
+        public static IServiceCollection AddPollyDependencies(this IServiceCollection services, IConfiguration config) 
+        {
+            services.AddSingleton<IAsyncPolicy>(sp =>
+            {
+                var retry = PollyPolicies.GetRetryPolicy();
+                var breaker = PollyPolicies.GetCircuitBreakerPolicy();
+
+                return Policy.WrapAsync(breaker, retry); // breaker outer: trips once after all retries fail
+            });
             return services;
         }
     }

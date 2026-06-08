@@ -5,6 +5,7 @@ using Cinnamon.Infrastructure.AWS.Model;
 using Cinnamon.Infrastructure.AWS.Settings;
 using Mapster;
 using Microsoft.Extensions.Options;
+using Polly;
 
 namespace Cinnamon.Infrastructure.AWS.Queries
 {
@@ -13,12 +14,14 @@ namespace Cinnamon.Infrastructure.AWS.Queries
         private readonly IDynamoDBContext _context;
         private readonly string _tableName;
         private readonly string _indexName;
+        private readonly IAsyncPolicy _policy;
 
-        public GetProductsByIdQuery(IDynamoDBContext context, IOptions<AwsSettings> settings)
+        public GetProductsByIdQuery(IDynamoDBContext context, IOptions<AwsSettings> settings, IAsyncPolicy policy)
         {
             _context = context;
             _tableName = settings.Value.DynamoDbTableName;
             _indexName = settings.Value.ProductsByIdIndexName;
+            _policy = policy;
         }
 
         public async Task<List<Product>> ExecuteAsync(string id)
@@ -29,8 +32,11 @@ namespace Cinnamon.Infrastructure.AWS.Queries
                 IndexName = _indexName
             };
 
-            var items = await _context.QueryAsync<ProductItem>(id, queryConfig).GetRemainingAsync();
-            return items.Adapt<List<Product>>();
+            return await _policy.ExecuteAsync(async () =>
+            {
+                var items = await _context.QueryAsync<ProductItem>(id, queryConfig).GetRemainingAsync();
+                return items.Adapt<List<Product>>();
+            });
         }
     }
 }

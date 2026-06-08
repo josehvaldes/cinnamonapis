@@ -6,6 +6,7 @@ using Cinnamon.Infrastructure.AWS.Model;
 using Cinnamon.Infrastructure.AWS.Settings;
 using Mapster;
 using Microsoft.Extensions.Options;
+using Polly;
 
 namespace Cinnamon.Infrastructure.AWS.Queries
 {
@@ -13,11 +14,13 @@ namespace Cinnamon.Infrastructure.AWS.Queries
     {
         private readonly IDynamoDBContext _context;
         private readonly string _tableName;
+        private readonly IAsyncPolicy _policy;
 
-        public GetProductsByCategoryAndInStock(IDynamoDBContext context, IOptions<AwsSettings> settings)
+        public GetProductsByCategoryAndInStock(IDynamoDBContext context, IOptions<AwsSettings> settings, IAsyncPolicy policy)
         {
             _context = context;
             _tableName = settings.Value.DynamoDbTableName;
+            _policy = policy;
         }
 
         public async Task<List<Product>> ExecuteAsync(string category, bool inStock)
@@ -28,9 +31,12 @@ namespace Cinnamon.Infrastructure.AWS.Queries
                 QueryFilter = [new ScanCondition(nameof(ProductItem.InStock), ScanOperator.Equal, inStock)]
             };
 
-            var items = await _context.QueryAsync<ProductItem>(category, queryConfig)
-                                      .GetRemainingAsync();
-            return items.Adapt<List<Product>>();
+            return await _policy.ExecuteAsync(async () =>
+            {
+                var items = await _context.QueryAsync<ProductItem>(category, queryConfig)
+                                          .GetRemainingAsync();
+                return items.Adapt<List<Product>>();
+            });
         }
     }
 }
