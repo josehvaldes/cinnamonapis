@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using Cinnamon.Application.Interfaces;
+using Cinnamon.Contracts.Responses;
 using Cinnamon.Contracts.Responses.Homepage;
 using Mapster;
 using Microsoft.AspNetCore.Http;

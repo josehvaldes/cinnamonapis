@@ -33,11 +33,8 @@ namespace Cinnamon.Infrastructure.AWS
                     .Build();
             });
 
-            services.AddScoped<IGetNewArrivalsQuery, GetNewArrivalsQuery>();
-            services.AddScoped<IGetTrendingQuery, GetTrendingQuery>();
-            services.AddScoped<IGetOnSalesQuery, GetOnSalesQuery>();
             services.AddScoped<IGetProductsByIdQuery, GetProductsByIdQuery>();
-            services.AddScoped<IGetProductsByCategoryAndInStock, GetProductsByCategoryAndInStock>();
+            services.AddScoped<IGetProductsByCategoryQuery, GetProductsByCategoryQuery>();
 
             return services;
         }

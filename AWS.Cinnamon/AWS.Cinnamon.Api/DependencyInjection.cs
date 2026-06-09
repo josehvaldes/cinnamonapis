@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using AWS.Cinnamon.Api.Services;
 using AWS.Cinnamon.Api.Settings;
 using Cinnamon.Application.Handlers;
 using Cinnamon.Application.Interfaces;
@@ -14,12 +15,18 @@ namespace AWS.Cinnamon.Api
         public static IServiceCollection AddAPIDependencies(
             this IServiceCollection services, IConfiguration config)
         {
+            services.AddHttpContextAccessor();
+            services.AddScoped<ILinkService, LinkService>();
+
             services.AddVersioningConfig(config);
             services.AddCorsConfig(config);
             services.AddRateLimitingConfig(config);
             services.AddScoped<IHandler, ProductHandler>();
             services.AddCustomHealthChecks(config);
             services.AddCacheProfiles(config);
+
+            
+
             return services;
         }
 

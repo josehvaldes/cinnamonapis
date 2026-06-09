@@ -1,5 +1,4 @@
-﻿
-namespace Cinnamon.Contracts.Responses.Homepage
+﻿namespace Cinnamon.Contracts.Responses.Homepage
 {
     public class HomepageResponse
     {
