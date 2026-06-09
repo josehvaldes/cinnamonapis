@@ -26,6 +26,7 @@ app.UseCors("AllowCloudflare");
 app.UseRateLimiter();
 app.MapCustomBehaviors(); // Extension method for any custom middleware or behaviors
 app.UseMiddleware<HeadersMiddleware>();
+app.UseMiddleware<CorrelationIdMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
