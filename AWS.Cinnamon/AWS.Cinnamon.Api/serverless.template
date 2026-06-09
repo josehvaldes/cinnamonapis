@@ -25,9 +25,13 @@
                   "dynamodb:PutItem",
                   "dynamodb:UpdateItem",
                   "dynamodb:DeleteItem",
-                  "dynamodb:Query"
+                  "dynamodb:Query",
+                  "dynamodb:BatchGetItem"
                 ],
-                "Resource": "arn:aws:dynamodb:us-east-2:*:table/test.cinnamon.products"
+                "Resource": [
+                "arn:aws:dynamodb:us-east-2:*:table/test.cinnamon.products",
+                "arn:aws:dynamodb:us-east-2:*:table/test.cinnamon.products.v2",
+                "arn:aws:dynamodb:us-east-2:*:table/test.cinnamon.mappings.v2"]
               }
             ]
           }
