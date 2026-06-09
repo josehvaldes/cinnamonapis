@@ -24,6 +24,8 @@ namespace AWS.Cinnamon.Api.Controllers
             logger.LogInformation("Received request for product with ID: {ProductId}", id);
             var product = await _handler.GetProductById(id);
             var productResponse = product.Adapt<ProductResponse>();
+            productResponse.Links = linkService.GetProductLinks(productResponse.Id);
+            logger.LogInformation("Returning product with ID: {ProductId}", id);
             return Ok(productResponse);
         }
 
@@ -31,6 +33,8 @@ namespace AWS.Cinnamon.Api.Controllers
         [ResponseCache(CacheProfileName = "Public5min")]
         public async Task<IActionResult> GetProductsByCategory(string category, [FromQuery] GetPagingRequest request)
         {
+            logger.LogInformation("Received request for products in category: {Category} with page number: {PageNumber} and page size: {PageSize}", category, request.PageNumber, request.PageSize);
+
             var pagedResult = await _handler.GetProductsByCategory(category, request.PageNumber, request.PageSize);
             var items = pagedResult.Items.Adapt<List<ProductResponse>>();
             foreach (var item in items)
@@ -43,6 +47,8 @@ namespace AWS.Cinnamon.Api.Controllers
                 pagedResult.TotalPages,
                 pagedResult.HasNextPage,
                 pagedResult.HasPreviousPage);
+
+            logger.LogInformation("Returning {Count} products for category: {Category} with page number: {PageNumber} and page size: {PageSize}", items.Count, category, request.PageNumber, request.PageSize);
             return Ok(response);
         }
     }

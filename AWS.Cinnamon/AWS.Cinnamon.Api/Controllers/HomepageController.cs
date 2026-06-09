@@ -31,7 +31,7 @@ namespace AWS.Cinnamon.Api.Controllers
                 NewArrivals = newArrivals.Adapt<IReadOnlyList<ProductResponse>>(),
                 OnSales = onsales.Adapt<IReadOnlyList<ProductResponse>>()
             };
-
+            _logger.LogInformation("Returning homepage data with {TrendingCount} trending products, {NewArrivalCount} new arrivals, and {OnSaleCount} on-sale products.", homepagedata.Trendings.Count, homepagedata.NewArrivals.Count, homepagedata.OnSales.Count);
             return Ok(homepagedata);
         }
     }
