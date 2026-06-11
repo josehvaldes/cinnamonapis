@@ -5,11 +5,11 @@ using Cinnamon.Domain.Entities;
 
 namespace Cinnamon.Application.Handlers
 {
-    public class ProductHandler : IHandler
+    public class ProductService : IProductService
     {
         private readonly IGetProductsByIdQuery _getProductById;
         private readonly IGetProductsByCategoryQuery _getProductsByCategory;
-        public ProductHandler(
+        public ProductService(
             IGetProductsByCategoryQuery getProductsByCategory,
             IGetProductsByIdQuery getProductById)
         {

@@ -12,7 +12,7 @@ namespace AWS.Cinnamon.Api.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class HomepageController(ILogger<HomepageController> _logger,
-        IHandler _handler) : ControllerBase
+        IProductService _handler) : ControllerBase
     {
         [HttpGet]
         [ResponseCache(CacheProfileName ="Public5min")]

@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using AWS.Cinnamon.Api.Services;
+using Cinnamon.Application.Common;
 using Cinnamon.Application.Interfaces;
 using Cinnamon.Contracts.Requests;
 using Cinnamon.Contracts.Responses;
@@ -13,7 +14,8 @@ namespace AWS.Cinnamon.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
 
     public class ProductsController(ILogger<ProductsController> logger, 
-        IHandler _handler, 
+        IProductService _handler,
+        IRatingService _ratingService,
         ILinkService linkService) : ControllerBase
     {
 
@@ -51,5 +53,15 @@ namespace AWS.Cinnamon.Api.Controllers
             logger.LogInformation("Returning {Count} products for category: {Category} with page number: {PageNumber} and page size: {PageSize}", items.Count, category, request.PageNumber, request.PageSize);
             return Ok(response);
         }
+
+        [HttpPost("{id}/rate")]
+        public async Task<IActionResult> RateProduct(string id, [FromBody] RateProductRequest request)
+        {
+            logger.LogInformation("Received request to rate product with ID: {ProductId} with rating: {Rating} and like status: {LikeIt}", id, request.Value, request.RatingType);
+            await _ratingService.RateProduct(id, request.Value, request.RatingType == "like" ? RatingMessageType.Like : RatingMessageType.Rating);
+            logger.LogInformation("Successfully rated product with ID: {ProductId} with rating: {Rating} and like status: {LikeIt}", id, request.Value, request.RatingType  );
+            return Accepted();
+        }
+
     }
 }

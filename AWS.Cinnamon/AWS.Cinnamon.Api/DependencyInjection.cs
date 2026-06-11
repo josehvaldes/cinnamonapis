@@ -21,7 +21,7 @@ namespace AWS.Cinnamon.Api
             services.AddVersioningConfig(config);
             services.AddCorsConfig(config);
             services.AddRateLimitingConfig(config);
-            services.AddScoped<IHandler, ProductHandler>();
+
             services.AddCustomHealthChecks(config);
             services.AddCacheProfiles(config);
 

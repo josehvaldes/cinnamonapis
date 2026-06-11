@@ -1,6 +1,9 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.SQS;
+using Cinnamon.Application.Interfaces.Actions;
 using Cinnamon.Application.Interfaces.Queries;
+using Cinnamon.Infrastructure.AWS.Actions;
 using Cinnamon.Infrastructure.AWS.Queries;
 using Cinnamon.Infrastructure.AWS.Settings;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +22,8 @@ namespace Cinnamon.Infrastructure.AWS
             services.Configure<AwsSettings>(config.GetSection("AWS"));
             services.AddAWSService<IAmazonDynamoDB>();
             services.AddPollyDependencies(config);
+            services.AddAWSService<IAmazonSQS>();
+
             services.AddSingleton<IDynamoDBContext>(sp =>
             {
                 var client = sp.GetRequiredService<IAmazonDynamoDB>();
@@ -35,19 +40,17 @@ namespace Cinnamon.Infrastructure.AWS
 
             services.AddScoped<IGetProductsByIdQuery, GetProductsByIdQuery>();
             services.AddScoped<IGetProductsByCategoryQuery, GetProductsByCategoryQuery>();
+            services.AddScoped<IRatingPublisher, RatingPublisher>();
 
             return services;
         }
 
         public static IServiceCollection AddPollyDependencies(this IServiceCollection services, IConfiguration config) 
         {
-            services.AddSingleton<IAsyncPolicy>(sp =>
-            {
-                var retry = PollyPolicies.GetRetryPolicy();
-                var breaker = PollyPolicies.GetCircuitBreakerPolicy();
+            services.AddSingleton<IAsyncPolicy>(sp =>PollyPolicies.GetDynamoDBPolicy());
 
-                return Policy.WrapAsync(breaker, retry); // breaker outer: trips once after all retries fail
-            });
+            services.AddKeyedSingleton<IAsyncPolicy>("sqs", (_, _) => PollyPolicies.GetSqsPolicy());
+
             return services;
         }
     }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Cinnamon.Application.Interfaces
 {
-    public interface IHandler
+    public interface IProductService
     {
         public Task<List<Product>> GetNewArrivals();
         public Task<List<Product>> GetTrending();

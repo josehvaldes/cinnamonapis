@@ -2,6 +2,7 @@ using AWS.Cinnamon.Api;
 using AWS.Cinnamon.Api.Mapping;
 using AWS.Cinnamon.Api.Middleware;
 using Cinnamon.Infrastructure.AWS;
+using Cinnamon.Application;
 
 MappingConfig.RegisterMappings();
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services.AddProblemDetails();
 // package will act as the webserver translating request and responses between the Lambda event source and ASP.NET Core.
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 builder.Services.AddAPIDependencies(builder.Configuration);
+builder.Services.AddApplicationDependencies(builder.Configuration);
 builder.Services.AddAWSDependencies(builder.Configuration);
 
 var app = builder.Build();

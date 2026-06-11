@@ -11,6 +11,6 @@ namespace Cinnamon.Infrastructure.AWS.Settings
         public string Region { get; set; } = string.Empty;
         public string ProductsTableName { get; set; } = string.Empty;
         public string MappingsTableName { get; set; } = string.Empty;
-        public string ProductsByIdIndexName { get; set; } = string.Empty;
+        public string SQSQueueUrl { get; set; } = string.Empty;
     }
 }
