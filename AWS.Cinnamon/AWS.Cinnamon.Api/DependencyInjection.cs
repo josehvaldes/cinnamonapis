@@ -73,7 +73,7 @@ namespace AWS.Cinnamon.Api
                 {
                     policy
                         .WithOrigins(corsSettings.AllowedOrigins)
-                        .WithHeaders("x-api-key", "Content-Type")
+                        .WithHeaders("x-api-key", "content-type", "x-correlation-id")
                         .WithMethods("GET", "OPTIONS");
                 });
 
@@ -82,7 +82,7 @@ namespace AWS.Cinnamon.Api
                 {
                     policy
                         .WithOrigins(corsSettings.AllowedOrigins)
-                        .WithHeaders("Content-Type", "Authorization")
+                        .WithHeaders("content-type", "authorization")
                         .WithMethods("GET", "POST", "PUT", "DELETE");
                 });
 
