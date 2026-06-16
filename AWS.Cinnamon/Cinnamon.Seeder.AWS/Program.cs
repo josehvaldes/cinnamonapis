@@ -12,8 +12,8 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 var dataDir = Path.Combine(AppContext.BaseDirectory, "Data");
-var productTableName = configuration.GetValue<string>("AWS:ProductsTableName") ?? "ProductsTable";
-var mappingTableName = configuration.GetValue<string>("AWS:MappingsTableName") ?? "MappingsTable";
+var productTableName = configuration.GetValue<string>("AWS:DynamoDbProductsTableName") ?? "ProductsTable";
+var mappingTableName = configuration.GetValue<string>("AWS:DynamoDbMappingsTableName") ?? "MappingsTable";
 
 var seeders = new Dictionary<string, Func<Task>>(StringComparer.OrdinalIgnoreCase) {
     //[nameof(ProductSeeder)] = () => new ProductSeeder().ExecuteAsync(Path.Combine(dataDir, "products.json"), productTableName),

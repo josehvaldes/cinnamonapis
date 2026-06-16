@@ -34,7 +34,7 @@ namespace AWS.Cinnamon.Api.Controllers
         [HttpGet("")]
         [ResponseCache(CacheProfileName = "Public5min")]
         public async Task<IActionResult> GetProducts([FromQuery] GetPagingRequest request)
-            => await GetProductsByCategory("products", request);
+            => await GetProductsByCategory("product", request);
 
         [HttpGet("category/{category}")]
         [ResponseCache(CacheProfileName = "Public5min")]
