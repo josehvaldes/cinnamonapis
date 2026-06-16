@@ -21,13 +21,6 @@
     "InStock": true
   },
   {
-    "id": "11111111-0000-0000-0000-000000000003",
-    "Name": "Cinnamon Roll",
-    "Img": "/products/cinnamon-roll-1995428_1280.jpg",
-    "Price": 2.99,
-    "InStock": true
-  },
-  {
     "id": "11111111-0000-0000-0000-000000000004",
     "Name": "Chocolate Croissant",
     "Img": "/products/chocolate-croissant-1929336_1280.jpg",
